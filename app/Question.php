@@ -19,4 +19,9 @@ class Question extends Model
     {
       return $this->hasMany('App\Vote');
     }
+    public function users()
+    {
+      return $this->hasMany('App\User');
+    }
+
 }

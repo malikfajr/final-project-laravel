@@ -61,6 +61,8 @@ class QuestionController extends Controller
     public function create() {
       return view('pages.question.create');
     }
+
+    
     public function show($id) {
       $question = Question::find($id);
       $answers = $question->answer()->get();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Question;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $questions = Question::all();
+        //$answers = $questions->users()->get();
+        $anwers="";
+      return view('welcome', compact('questions','anwers'));
+        
     }
+    
+
+    public function showtag($id){
+        $questions = Question::where('tag','like','%' .$id .'%')->get();
+       // dd($questions);
+        return view('welcome')
+                  ->with(compact('questions'));
+      }
 }
