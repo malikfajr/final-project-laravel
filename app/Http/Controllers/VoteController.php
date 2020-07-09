@@ -22,18 +22,18 @@ class VoteController extends Controller {
   public function vote(Request $req) {
       $key["user_id"] = Auth::user()->id;
       $post_id = $req->input('id');
-      $value = $req->input('vote')
+      $value = $req->input('vote');
 
       if ($req->input('type') == 'question') {
         $key['question_id'] = $post_id;
         $vote = Votes::updateOrCreate($key, ["vote" => $value]);
 
-        setPoint(Question::find($post_id)->user_id, $req->input('vote'));
+        // setPoint(Question::find($post_id)->user_id, $req->input('vote'));
       }elseif ($req->input('type') == 'answer') {
         $key['answer_id'] = $post_id;
         $vote = Votes::updateOrCreate($key, ["vote" => $value]);
 
-        setPoint(Answer::find($post_id)->user_id, $req->input('vote'));
+        // setPoint(Answer::find($post_id)->user_id, $req->input('vote'));
       }else {
         return "error vote";
       }
@@ -43,9 +43,9 @@ class VoteController extends Controller {
       return response()->json($data);
   }
 
-  private function setPoint($user_id, $vote){
+  public function setPoint($user_id, $vote){
     if ($vote == 'like') {
       // $reputation = Reputation::
     }
-  };
+  }
 }

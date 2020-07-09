@@ -9,7 +9,7 @@
             <div class="media flex-wrap w-100 align-items-center">
               <div class="media-body ml-3">
                 <!-- redirect to user profile -->
-                <a href="#" >{{ $creator->name }}</a>
+                <a href="#" >{{ $question->username }}</a>
                 <div class="text-muted small">created at {{ $question->created_at }}</div>
               </div>
             </div>
@@ -25,7 +25,7 @@
                   <a href="#" class="bg-secondary btn btn-normal text-light" onclick="thumbs('like', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-up"></i>
                   </a>
-                  <span>192</span>
+                  <span> &nbsp;{{ $question->like - $question->dislike }} &nbsp;</span>
                   <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-down"></i>
                   </a>
@@ -49,7 +49,7 @@
                       <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('like', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-up"></i>
                       </a>
-                      <span>192</span>
+                      <span> &nbsp;{{ $answer->like - $answer->dislike }} &nbsp;</span>
                       <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-down"></i>
                       </a>

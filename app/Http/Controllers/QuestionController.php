@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Question;
 use App\User;
+use App\Models\QuestionModel;
 
 class QuestionController extends Controller
 {
@@ -66,12 +67,11 @@ class QuestionController extends Controller
 
 
     public function show($id) {
-      $question = Question::find($id);
-      $creator = $question->user()->first();
-      $answers = $question->answer()->get();
+      $question = QuestionModel::QuestionDetail($id);
+      $answers =  QuestionModel::AnswersDetail($id);
 
       return view('pages.question.show')
-                ->with(compact('question','answers', 'creator'));
+                ->with(compact('question','answers'));
     }
     public function edit($id) {
       $question = Question::find($id);
