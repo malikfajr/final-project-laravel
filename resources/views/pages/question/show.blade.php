@@ -22,11 +22,11 @@
            </div>
            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
                <div class="px-4 pt-3">
-                  <a href="#" class="bg-secondary btn btn-normal text-light">
+                  <a href="#" class="bg-secondary btn btn-normal text-light" onclick="thumbs('like', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-up"></i>
                   </a>
                   <span>192</span>
-                  <a href="#" class="bg-secondary btn btn-normal text-light">
+                  <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-down"></i>
                   </a>
                 </div>
@@ -46,11 +46,11 @@
                </div>
                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
                    <div class="px-4 pt-3">
-                      <a href="#" class="bg-secondary btn btn-normal text-light">
+                      <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('like', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-up"></i>
                       </a>
                       <span>192</span>
-                      <a href="#" class="bg-secondary btn btn-normal text-light">
+                      <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-down"></i>
                       </a>
                     </div>
@@ -154,4 +154,29 @@
     height: auto
   }
   </style>
+@endpush
+
+@push('script')
+  <script type="text/javascript">
+    function thumbs(vote, type, id) {
+      $.ajax({
+        url: '/vote',
+        method:'post',
+        dataType: 'json',
+        data: {
+          "_token": "{{ csrf_token() }}",
+          vote,
+          type,
+          id
+        },
+        success: function (res) {
+          if (res.ok) {
+            location.reload();
+          }else {
+            alert(res.msg)
+          }
+        }
+      })
+    };
+  </script>
 @endpush
