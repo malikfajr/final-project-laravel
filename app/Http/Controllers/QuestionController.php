@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Question;
+use App\User;
 
 class QuestionController extends Controller
 {
@@ -19,6 +20,7 @@ class QuestionController extends Controller
       $question->content = $req->input('content');
       $question->id = uniqid("Q-");
       $question->user_id = Auth::id();
+      $question->tag = 'laravel';
 
       $question->save();
       $data['ok'] = true;
@@ -62,12 +64,14 @@ class QuestionController extends Controller
       return view('pages.question.create');
     }
 
-    
+
     public function show($id) {
       $question = Question::find($id);
+      $creator = $question->user()->first();
       $answers = $question->answer()->get();
+
       return view('pages.question.show')
-                ->with(compact('question','answers'));
+                ->with(compact('question','answers', 'creator'));
     }
     public function edit($id) {
       $question = Question::find($id);

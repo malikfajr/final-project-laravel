@@ -9,7 +9,7 @@
             <div class="media flex-wrap w-100 align-items-center">
               <div class="media-body ml-3">
                 <!-- redirect to user profile -->
-                <a href="#" >Nama pembuat</a>
+                <a href="#" >{{ $creator->name }}</a>
                 <div class="text-muted small">created at {{ $question->created_at }}</div>
               </div>
             </div>
