@@ -47,6 +47,15 @@
                 ?>
                
             </div>
+            <div class="px-4 pt-3">
+                <a href="#" class="bg-primary btn btn-primary text-light">
+                  <i class="far fa-thumbs-up"></i>
+                </a>
+                <span>192</span>
+                <a href="#" class="bg-secondary btn btn-normal text-light">
+                  <i class="far fa-thumbs-down"></i>
+                </a>
+              </div>
         </div>
         <hr>
       @endforeach
