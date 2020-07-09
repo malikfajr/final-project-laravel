@@ -18,6 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password'
     ];
+    protected $primatyKey = 'id';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -39,6 +40,6 @@ class User extends Authenticatable
 
     public function question()
     {
-      return $this->belongsTo('App\Question');
+      return $this->hasMany('App\Question');
     }
 }

@@ -25,9 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         $questions = Question::all();
-        //$answers = $questions->users()->get();
-        $anwers="";
-      return view('welcome', compact('questions','anwers'));
+        $answers="";
+       // $answers = $questions->users()->get();
+       // dd($answers);
+      return view('welcome', compact('questions','answers'));
         
     }
     
