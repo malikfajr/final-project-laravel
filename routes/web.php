@@ -11,14 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware("auth");
+Route::get('/','HomeController@index')->middleware("auth");
+Route::get('/tags/{id}', 'HomeController@showtag');
 
 Route::prefix('question')->group(function() {
   Route::get('/', 'QuestionController@index')->name('question.index');
   Route::get('/create', 'QuestionController@create');
   Route::get('/{id}', 'QuestionController@show');
+  
   Route::get('/{id}/edit', 'QuestionController@edit');
 
   Route::post('/', 'QuestionController@store');
