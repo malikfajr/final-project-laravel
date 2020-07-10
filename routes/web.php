@@ -18,10 +18,11 @@ Route::prefix('question')->group(function() {
   Route::get('/', 'QuestionController@index')->name('question.index');
   Route::get('/create', 'QuestionController@create');
   Route::get('/{id}', 'QuestionController@show');
-  
+
   Route::get('/{id}/edit', 'QuestionController@edit');
 
   Route::post('/', 'QuestionController@store');
+  Route::post('/solved', 'QuestionController@solved');
   Route::put('/{id}', 'QuestionController@update');
   Route::delete('/{id}', 'QuestionController@destroy');
 });

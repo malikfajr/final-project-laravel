@@ -7,10 +7,13 @@
         <div class="card mb-2">
           <div class="card-header">
             <div class="media flex-wrap w-100 align-items-center">
-              <div class="media-body ml-3">
+              <div class="media-body ml-3 mr-auto">
                 <!-- redirect to user profile -->
                 <a href="#" >{{ $question->username }}</a>
-                <div class="text-muted small">created at {{ $question->created_at }}</div>
+                <div class="text-muted small">created at {{ $question->created_at }}, updated at {{ $question->updated_at }}</div>
+              </div>
+              <div class="media-body d-flex mr-3 ml-auto justify-content-end">
+                {!! ($question->solved) ? "<a href='#{$question->solved}' class='btn btn-success'>Solved</a>" : "" !!}
               </div>
             </div>
           </div>
@@ -40,7 +43,7 @@
         </div>
         @foreach($answers as $key => $answer)
           <div class="col-md-12">
-            <div class="card mb-2">
+            <div class="card mb-2" id="{{ $answer->id }}">
               <div class="card-body">
                    {!! $answer->content !!}
                </div>
@@ -53,6 +56,10 @@
                       <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-down"></i>
                       </a>
+                      &nbsp;&nbsp;&nbsp;
+                      @if($question->user_id == Auth::id() && $answer->user_id != Auth::id())
+                        <a href="#" class="btn btn-normal text-white {{ $question->solved == $answer->id ? 'btn-success disabled' : (!$question->solved ? 'bg-secondary' : 'bg-secondary disabled')}}" onclick="setSolved('{{ $answer->id }}')">Solve</a>
+                      @endif
                     </div>
                    <div class="px-4 pt-3"> <button type="button" class="btn btn-primary"><i class="ion ion-md-create"></i>&nbsp; add comment</button> </div>
                </div>
@@ -169,6 +176,24 @@
       });
 
     })
+
+    function setSolved(answer_id) {
+      $.ajax({
+        url: '/question/solved',
+        method: 'post',
+        dataType: 'json',
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "question_id": '{{ $question->id }}',
+          answer_id
+        },
+        success: function(res) {
+          if (res.ok) {
+            location.reload()
+          }
+        }
+      })
+    }
 
     function thumbs(vote, type, id) {
       $.ajax({

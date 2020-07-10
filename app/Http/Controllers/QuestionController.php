@@ -55,7 +55,16 @@ class QuestionController extends Controller
         return response()->json(["ok" => false, "msg" => "Maaf, anda bukan pembuat pertanyan"]);
       }
     }
+    public function solved(Request $req)
+    {
+      $question_id = $req->input('question_id');
+      $answer_id = $req->input('answer_id');
+      $question = Question::find($question_id);
+      $question->solved = $answer_id;
+      $question->save();
 
+      return json_encode(['ok' => true, 'data' => $question]);
+    }
     //view controller
 
     public function index() {
