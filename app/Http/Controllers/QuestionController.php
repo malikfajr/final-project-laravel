@@ -21,7 +21,7 @@ class QuestionController extends Controller
       $question->content = $req->input('content');
       $question->id = uniqid("Q-");
       $question->user_id = Auth::id();
-      $question->tag = 'laravel';
+      $question->tag = $req->input('tag');
 
       $question->save();
       $data['ok'] = true;
@@ -33,6 +33,7 @@ class QuestionController extends Controller
       $question = Question::find($id);
       $question->title = $req->input('title');
       $question->content = $req->input('content');
+      $question->tag = $req->input('tag');
       if ($req->input('user_id') == Auth::user()->id) {
         $question->save();
         $data['ok'] = true;

@@ -16,9 +16,9 @@
           </div>
           <div class="card-body">
                 <p style="text-align:center; font-size: 3em; border-radius: 50px;" class="bg-secondary">
-                  {{ $question->title }}
+                  {!! $question->title !!}
                 </p>
-               {{$question->content}}
+               {!! $question->content !!}
            </div>
            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
                <div class="px-4 pt-3">
@@ -42,7 +42,7 @@
           <div class="col-md-12">
             <div class="card mb-2">
               <div class="card-body">
-                   {{$answer->content}}
+                   {!! $answer->content !!}
                </div>
                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
                    <div class="px-4 pt-3">
@@ -69,7 +69,7 @@
           <form  action="/answers/{{$question->id}}" method="post">
             @csrf
             <div class="form-group">
-              <textarea name="content" class="form-control" rows="8" cols="80"></textarea>
+              <textarea name="content" id="content-answer" class="form-control" rows="8" cols="80"></textarea>
             </div>
             <button type="submit" class="btn btn-success">Input Jawaban</button>
           </form>
@@ -157,7 +157,19 @@
 @endpush
 
 @push('script')
+  <script src="{{asset('/ckeditor/ckeditor.js')}}" charset="utf-8"></script>
   <script type="text/javascript">
+    $(function(){
+      var editor = CKEDITOR.replace('content-answer', {
+        language: 'en-gb'
+      });
+      editor.on( 'required', function( evt ) {
+          editor.showNotification( 'This field is required.', 'warning' );
+          evt.cancel();
+      });
+
+    })
+
     function thumbs(vote, type, id) {
       $.ajax({
         url: '/vote',

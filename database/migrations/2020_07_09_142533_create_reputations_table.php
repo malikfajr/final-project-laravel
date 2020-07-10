@@ -16,7 +16,7 @@ class CreateReputationsTable extends Migration
         Schema::create('reputations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->integet('point');
+            $table->integer('point');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
