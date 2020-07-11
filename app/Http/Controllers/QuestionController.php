@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Question;
+use App\Comment;
 use App\User;
 use App\Reputation;
 use App\Models\QuestionModel;
@@ -95,11 +96,30 @@ class QuestionController extends Controller
       if (!$question) {
         return redirect('/question');
       }
+
+      $question->comment = $this->getComment($question->id);
+      foreach ($answers as $key => $answer) {
+        $answer->comment = $this->getComment($answer->id);
+      }
+      // dd($question);
       return view('pages.question.show')
                 ->with(compact('question','answers'));
     }
     public function edit($id) {
       $question = Question::find($id);
       return view('pages.question.edit', compact('question'));
+    }
+
+    public function getComment($id)
+    {
+      if (substr($id, 0, 1) == 'Q') {
+        $key = 'question_id';
+      }elseif (substr($id, 0, 1) == 'A') {
+        $key = 'answer_id';
+      }
+      return Comment::where($key, $id)
+              ->join('users', 'comments.user_id', '=', 'users.id')
+              ->select("comments.content", "users.id", "users.name")
+              ->get()->toArray();
     }
 }

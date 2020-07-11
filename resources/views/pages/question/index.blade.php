@@ -51,10 +51,13 @@
 
 @push('script')
   <!-- Page level plugins -->
-  <script src="{{ asset('/sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('/sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}" defer></script>
+  <script src="{{ asset('/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}" defer></script>
 
   <script type="text/javascript">
+    $(document).ready(function() {
+      $("#table-pertanyaan").DataTable();
+    })
       function deleteQuestion(e, id) {
         e.preventDefault();
         console.log(id);

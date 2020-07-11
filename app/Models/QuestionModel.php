@@ -19,6 +19,9 @@ class QuestionModel{
                   ON q.id = v.question_id
                 WHERE q.id = '$question_id' GROUP BY q.id";
       $data =  DB::SELECT(DB::raw($query));
+      if (!$data) {
+        return false;
+      }
       return $data[0];
     }
 

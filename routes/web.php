@@ -29,6 +29,7 @@ Route::prefix('question')->group(function() {
 
 Route::post('/answers/{question_id}', 'AnswerController@store');
 Route::post('/vote', 'VoteController@vote');
+Route::post('/comment', 'CommentController@store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -37,7 +37,18 @@
                     <i class="far fa-thumbs-down"></i>
                   </a>
                 </div>
-               <div class="px-4 pt-3"> <button type="button" class="btn btn-primary"><i class="ion ion-md-create"></i>&nbsp; add comment</button> </div>
+               <div class="px-4 pt-3">
+                 <button type="button" class="btn btn-primary" data-togle="modal" data-target="#commentModal" onclick="addComment('{{$question->id}}')">
+                   <i class="ion ion-md-create"></i>&nbsp; add comment
+                 </button>
+               </div>
+           </div>
+           <div class="card-footer">
+             <div class="container">
+               @foreach($question->comment as $key => $comment)
+                <small>{{$comment['content']}} - {{ $comment['name']}}</small> <br>
+               @endforeach
+            </div>
            </div>
         </div>
       </div>
@@ -69,7 +80,18 @@
                         <a href="#" class="btn btn-normal text-white {{ $question->solved == $answer->id ? 'btn-success disabled' : (!$question->solved ? 'bg-secondary' : 'bg-secondary disabled')}}" onclick="setSolved('{{ $answer->id }}')">Solve</a>
                       @endif
                     </div>
-                   <div class="px-4 pt-3"> <button type="button" class="btn btn-primary"><i class="ion ion-md-create"></i>&nbsp; add comment</button> </div>
+                   <div class="px-4 pt-3">
+                     <button type="button" class="btn btn-primary" data-togle="modal" data-target="#commentModal" onclick="addComment('{{$answer->id}}')">
+                       <i class="ion ion-md-create"></i>&nbsp; add comment
+                     </button>
+                   </div>
+               </div>
+               <div class="card-footer">
+                 <div class="container">
+                   @foreach($answer->comment as $key => $comment)
+                    <small>{{$comment['content']}} - {{ $comment['name']}}</small> <br>
+                   @endforeach
+                </div>
                </div>
             </div>
           </div>
@@ -90,6 +112,31 @@
           </form>
 
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add Comment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="#" id="commentForm">
+          <div class="modal-body">
+              <div class="form-group">
+                <input type="text" class="form-control" name="commentValue" value="">
+                <input type="hidden" class="form-control" name="requestId" value="">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send Comment</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -182,8 +229,39 @@
           editor.showNotification( 'This field is required.', 'warning' );
           evt.cancel();
       });
+      $("#commentForm").submit(function(e){
+        e.preventDefault();
+
+        var content = $("input[name='commentValue']").val();
+        var id = $("input[name='requestId']").val();
+        $.ajax({
+          url: '/comment',
+          method: 'post',
+          dataType: 'json',
+          data: {
+            "_token": '{{ csrf_token() }}',
+            id,
+            content
+          },
+          success: function(res) {
+            if (res.ok) {
+              location.reload()
+            }else {
+              alert(res.message)
+            }
+          }
+        })
+      });
 
     })
+    function addComment(id) {
+      $("input[name='requestId']").val(id);
+      @guest
+      alert('Anda harus login dulu!')
+      @else
+      $("#commentModal").modal('show');
+      @endguest
+    }
 
     function setSolved(answer_id) {
       $.ajax({

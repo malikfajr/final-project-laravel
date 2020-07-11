@@ -11,7 +11,7 @@ class CommentController extends Controller {
     if (!Auth::check()) {
       return response()->json([
         'ok' => false,
-        'msg' => "Silahkan Login Dulu"
+        'message' => "Silahkan Login Dulu"
       ]);
     }
   }
