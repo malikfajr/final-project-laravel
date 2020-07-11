@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Question;
 use App\User;
+use App\Reputation;
 use App\Models\QuestionModel;
 
 class QuestionController extends Controller
@@ -61,9 +62,20 @@ class QuestionController extends Controller
       $answer_id = $req->input('answer_id');
       $question = Question::find($question_id);
       $question->solved = $answer_id;
-      $question->save();
 
+      $answer = $question->answer()->where("id", "=", $answer_id)->first();
+      $point = $this->solvePoint($answer->user_id);
+
+      $question->save();
       return json_encode(['ok' => true, 'data' => $question]);
+    }
+    public function solvePoint($user_id)
+    {
+      $point = Reputation::firstOrCreate(["user_id" => $user_id]);
+      $point->update(["point" => $point->point += 15]);
+
+      return $point;
+
     }
     //view controller
 

@@ -27,7 +27,7 @@
             {{$question->title}}
             </h2>
             <h3 class="post-subtitle">
-            {{$question->content}}
+            {!! $question->content !!}
             </h3>
           </a>
           <p class="post-meta">ask by
@@ -45,7 +45,7 @@
                   $tagged =  implode(" ", $links);
                   echo $tagged;
                 ?>
-               
+
             </div>
             <div class="px-4 pt-3">
                 <a href="#" class="bg-primary btn btn-primary text-light">
@@ -59,9 +59,9 @@
         </div>
         <hr>
       @endforeach
-       
+
         <!-- Pager -->
-        
+
       </div>
     </div>
   </div>
