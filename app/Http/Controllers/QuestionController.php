@@ -89,9 +89,12 @@ class QuestionController extends Controller
 
 
     public function show($id) {
-      $question = QuestionModel::QuestionDetail($id);
-      $answers =  QuestionModel::AnswersDetail($id);
-
+      $user_id = Auth::id();
+      $question = QuestionModel::QuestionDetail($user_id, $id);
+      $answers =  QuestionModel::AnswersDetail($user_id, $id);
+      if (!$question) {
+        return redirect('/question');
+      }
       return view('pages.question.show')
                 ->with(compact('question','answers'));
     }

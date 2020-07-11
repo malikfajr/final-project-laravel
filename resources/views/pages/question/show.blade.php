@@ -24,12 +24,16 @@
                {!! $question->content !!}
            </div>
            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+             <?php
+             $like =  $question->response == 'like' ? 'bg-primary disabled' : (!$question->response ? 'bg-secondary' : ' bg-secondary disabled');
+             $dislike =  $question->response == 'dislike' ? 'bg-primary disabled' : (!$question->response ? 'bg-secondary' : ' bg-secondary disabled');
+              ?>
                <div class="px-4 pt-3">
-                  <a href="#" class="bg-secondary btn btn-normal text-light" onclick="thumbs('like', 'question', '{{ $question->id }}')">
+                  <a href="#" class="btn btn-normal text-light {{$like}}" onclick="thumbs('like', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-up"></i>
                   </a>
                   <span> &nbsp;{{ $question->like - $question->dislike }} &nbsp;</span>
-                  <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'question', '{{ $question->id }}')">
+                  <a href="#" class="btn btn-normal text-light {{$dislike}}"  onclick="thumbs('dislike', 'question', '{{ $question->id }}')">
                     <i class="far fa-thumbs-down"></i>
                   </a>
                 </div>
@@ -48,12 +52,16 @@
                    {!! $answer->content !!}
                </div>
                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                 <?php
+                 $like =  $answer->response == 'like' ? 'bg-primary disabled' : (!$answer->response ? 'bg-secondary' : ' bg-secondary disabled');
+                 $dislike =  $answer->response == 'dislike' ? 'bg-primary disabled' : (!$answer->response ? 'bg-secondary' : ' bg-secondary disabled');
+                  ?>
                    <div class="px-4 pt-3">
-                      <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('like', 'answer', '{{ $answer->id }}')">
+                      <a href="#" class="btn btn-normal text-light {{$like}}"  onclick="thumbs('like', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-up"></i>
                       </a>
                       <span> &nbsp;{{ $answer->like - $answer->dislike }} &nbsp;</span>
-                      <a href="#" class="bg-secondary btn btn-normal text-light"  onclick="thumbs('dislike', 'answer', '{{ $answer->id }}')">
+                      <a href="#" class="btn btn-normal text-light {{$dislike}}"  onclick="thumbs('dislike', 'answer', '{{ $answer->id }}')">
                         <i class="far fa-thumbs-down"></i>
                       </a>
                       &nbsp;&nbsp;&nbsp;
@@ -210,7 +218,7 @@
           if (res.ok) {
             location.reload();
           }else {
-            alert(res.msg)
+            alert(res.message)
           }
         }
       })
