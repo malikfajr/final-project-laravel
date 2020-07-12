@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+  <title>Forum Indonesia</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -42,7 +42,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
               </li>
-              
+
             </ul>
           </div>
         </div>
@@ -55,7 +55,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-         
+
           <p class="copyright text-muted">Copyright &copy; Your Website 2020</p>
         </div>
       </div>
