@@ -12,8 +12,9 @@
                 <a href="#" >{{ $question->username }}</a>
                 <div class="text-muted small">created at {{ $question->created_at }}, updated at {{ $question->updated_at }}</div>
               </div>
-              <div class="media-body d-flex mr-3 ml-auto justify-content-end">
+              <div class="media-body d-flex mr-3 ml-auto justify-content-end align-items-center">
                 {!! ($question->solved) ? "<a href='#{$question->solved}' class='btn btn-success'>Solved</a>" : "" !!}
+                &nbsp;&nbsp;&nbsp; {{ !$question->user_point ? '0' : $question->user_point}} point
               </div>
             </div>
           </div>
@@ -81,6 +82,8 @@
                       @endif
                     </div>
                    <div class="px-4 pt-3">
+                     dijawab oleh <strong> {{ $answer->user_name }} </strong> {{!$answer->user_point ? '0' : $answer->user_point }} point
+                     &nbsp;&nbsp;&nbsp;
                      <button type="button" class="btn btn-primary" data-togle="modal" data-target="#commentModal" onclick="addComment('{{$answer->id}}')">
                        <i class="ion ion-md-create"></i>&nbsp; add comment
                      </button>

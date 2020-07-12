@@ -10,6 +10,7 @@ class QuestionModel{
                   u.name as username,
                   (Select count(vote) FROM votes where question_id = '$question_id' and vote = 'like') as 'like',
                   (Select count(vote) FROM votes where question_id = '$question_id' and vote = 'dislike') as 'dislike',
+                  (SELECT reputations.point from reputations WHERE user_id = u.id) as user_point,
                   v.vote as 'response'
                 FROM `questions`q INNER JOIN `users` u
                   ON q.user_id = u.id
@@ -30,6 +31,8 @@ class QuestionModel{
         a.* ,
        (SELECT COUNT(vote) FROM votes WHERE vote = 'like' AND answer_id = a.id) as 'like',
        (SELECT COUNT(vote) FROM votes WHERE vote = 'dislike' AND answer_id = a.id) as 'dislike',
+       (SELECT reputations.point from reputations WHERE user_id = a.user_id) as user_point,
+       (SELECT users.name from users WHERE id = a.user_id) as user_name,
         v.vote as 'response'
       from answers a
       	LEFT JOIN
