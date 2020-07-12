@@ -25,16 +25,24 @@ class HomeController extends Controller
      */
     public function index()
     {
+      try {
         $questions = QuestionModel::all(Auth::id());
-
+      } catch (\Exception $e) {
+        return redirect('/question');
+      }
       return view('welcome', compact('questions'));
 
     }
 
 
     public function showtag($id){
+      try {
         $questions = QuestionModel::byTag(Auth::id(), $id);
-       // dd($questions);
+      } catch (\Exception $e) {
+        return redirect('/question');
+      }
+
+
         return view('welcome')
                   ->with(compact('questions'));
       }
