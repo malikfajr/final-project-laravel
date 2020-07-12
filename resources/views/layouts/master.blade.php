@@ -19,7 +19,7 @@
 
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
           <div class="container">
-            <a href="/" class="navbar-brand">LaraHub</a>
+            <a href="/" class="navbar-brand">Forum Indonesia</a>
             @guest
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item no-arrow">
