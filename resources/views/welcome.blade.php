@@ -31,7 +31,7 @@
             </h3>
           </a>
           <p class="post-meta">ask by
-          <a href="#">{{$question->user_id}}</a>
+          <a href="#">{{$question->username}}</a>
             on {{$question->created_at}}</p>
             <div class="tag">
                 <?php
@@ -48,11 +48,15 @@
 
             </div>
             <div class="px-4 pt-3">
-                <a href="#" class="bg-primary btn btn-primary text-light">
+              <?php
+              $like =  $question->response == 'like' ? 'btn-primary bg-primary disabled' : (!$question->response ? 'bg-secondary' : ' bg-secondary disabled');
+              $dislike =  $question->response == 'dislike' ? 'btn-primary bg-primary disabled' : (!$question->response ? 'bg-secondary' : ' bg-secondary disabled');
+               ?>
+                <a href="#" class="btn btn-normal text-light {{$like}}" onclick="thumbs('like', 'question', '{{ $question->id }}')">
                   <i class="far fa-thumbs-up"></i>
                 </a>
-                <span>192</span>
-                <a href="#" class="bg-secondary btn btn-normal text-light">
+                <span>{{ $question->like - $question->dislike}}</span>
+                <a href="#" class="btn btn-normal text-light {{$dislike}}" onclick="thumbs('dislike', 'question', '{{ $question->id }}')">
                   <i class="far fa-thumbs-down"></i>
                 </a>
               </div>
@@ -65,4 +69,26 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    function thumbs(vote, type, id) {
+      $.ajax({
+        url: '/vote',
+        method:'post',
+        dataType: 'json',
+        data: {
+          "_token": "{{ csrf_token() }}",
+          vote,
+          type,
+          id
+        },
+        success: function (res) {
+          if (res.ok) {
+            location.reload();
+          }else {
+            alert(res.message)
+          }
+        }
+      })
+    };
+  </script>
 @endsection

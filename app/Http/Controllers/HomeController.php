@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
+use Illuminate\Support\Facades\Auth;
+use App\Models\QuestionModel;
 
 class HomeController extends Controller
 {
@@ -24,17 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $questions = Question::all();
-        $answers="";
-       // $answers = $questions->users()->get();
-       // dd($answers);
-      return view('welcome', compact('questions','answers'));
-        
+        $questions = QuestionModel::all(Auth::id());
+
+      return view('welcome', compact('questions'));
+
     }
-    
+
 
     public function showtag($id){
-        $questions = Question::where('tag','like','%' .$id .'%')->get();
+        $questions = QuestionModel::byTag(Auth::id(), $id);
        // dd($questions);
         return view('welcome')
                   ->with(compact('questions'));
