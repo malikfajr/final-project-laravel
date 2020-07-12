@@ -65,6 +65,6 @@ class VoteController extends Controller {
     } catch (\Exception $e) {
       return false;
     }
-
+    return true;
   }
 }
